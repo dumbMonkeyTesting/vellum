@@ -27,6 +27,9 @@ const files = {
   "/index.html": "index.html",
   "/app.js": "app.js",
   "/styles.css": "styles.css",
+  "/favicon.ico": "icon-48.png",
+  "/icon-48.png": "icon-48.png",
+  "/icon-192.png": "icon-192.png",
 };
 
 createFeed(store);
@@ -36,14 +39,15 @@ const server = http.createServer(async (req, res) => {
     const url = new URL(req.url, `http://${req.headers.host || "localhost"}`);
     if (req.method === "GET" && files[url.pathname]) {
       const filePath = path.join(publicDir, files[url.pathname]);
-      const type = filePath.endsWith(".css") ? "text/css" : filePath.endsWith(".js") ? "text/javascript" : "text/html";
-      res.writeHead(200, { "content-type": `${type}; charset=utf-8`, "cache-control": "no-store" });
+      const type = filePath.endsWith(".css")
+        ? "text/css; charset=utf-8"
+        : filePath.endsWith(".js")
+          ? "text/javascript; charset=utf-8"
+          : filePath.endsWith(".png")
+            ? "image/png"
+            : "text/html; charset=utf-8";
+      res.writeHead(200, { "content-type": type, "cache-control": "no-store" });
       fs.createReadStream(filePath).pipe(res);
-      return;
-    }
-    if (req.method === "GET" && url.pathname === "/favicon.ico") {
-      res.writeHead(204);
-      res.end();
       return;
     }
     if (req.method === "GET" && url.pathname === "/api/state") {
