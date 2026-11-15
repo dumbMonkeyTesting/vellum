@@ -1,0 +1,15 @@
+{
+  "name": "mycoin3",
+  "private": true,
+  "type": "module",
+  "description": "Read-only pump.fun launch reader for Solana",
+  "scripts": {
+    "start": "node src/server.mjs",
+    "test": "node --test src/reader.test.mjs"
+  },
+  "dependencies": {
+    "@solana/spl-token": "^0.4.15",
+    "@solana/web3.js": "^1.99.0",
+    "bs58": "^6.0.0"
+  }
+}

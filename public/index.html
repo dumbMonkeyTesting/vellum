@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vellum : Solana launch record</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="#top">
+      <svg class="mark" viewBox="0 0 40 40" aria-hidden="true">
+        <path fill="currentColor" fill-rule="evenodd" d="M20 2.2 37.4 14.6 31.6 37.4 8.4 37.4 2.6 14.6Z M26.2 11.4 35.6 19.2 31.6 33.2 18.4 33.2 15.2 19.2Z"></path>
+      </svg>
+      <span>
+        <strong>Vellum </strong>
+        <small>Solana</small>
+      </span>
+    </a>
+    <nav aria-label="Sections">
+      <a href="#inspect">Inspect</a>
+      <a href="#watch">Watchlist</a>
+      <a href="#launches">Launches</a>
+      <a href="#names">Names</a>
+      <a href="#phases">Phases</a>
+      <a href="#record">Record</a>
+    </nav>
+    <a class="pill blank" href="#" data-need="Social profile">X</a>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="kicker">On-chain record · not a safety certificate</p>
+        <h1>The launch, written down.</h1>
+        <p class="lede">Inspect a Solana CA, wallet, or transaction. Keep a quiet watchlist, and see pump.fun creates, repeated names, and graduations as they land. No wallet. Nothing to sign.</p>
+        <div class="hero-cta">
+          <a class="btn" href="#inspect">Read an address</a>
+        </div>
+        <div class="hero-live">
+          <p class="kicker">Live on this page</p>
+          <ul>
+            <li><a href="#inspect"><b>Inspector</b><span>CA, wallet, or signature, with the slot it was read at.</span></a></li>
+            <li><a href="#watch"><b>Watchlist</b><span>SOL balances you ask for, stored only in this browser.</span></a></li>
+            <li><a href="#launches"><b>Pump.fun launches</b><span>New CAs, with phase and repeated names.</span></a></li>
+            <li><a href="#names"><b>Name watch</b><span>Exact name or ticker matches. Pictures are not compared.</span></a></li>
+            <li><a href="#phases"><b>Curve phases</b><span>Still on the bonding curve, or graduated to a pool.</span></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="hero-side">
+        <article class="card network">
+          <p class="kicker">Network</p>
+          <dl class="stats" id="network">
+            <div><dt>Slot</dt><dd id="slot">…</dd></div>
+            <div><dt>Feed</dt><dd id="feed">…</dd></div>
+            <div><dt>Cluster</dt><dd>mainnet</dd></div>
+            <div><dt>Checked</dt><dd id="checked">…</dd></div>
+          </dl>
+        </article>
+        <article class="card official" id="project">
+          <p class="kicker">Official token</p>
+          <div class="official-head">
+            <h2 class="token-title" id="project-symbol">—</h2>
+            <span class="verified" id="project-badge">Not set</span>
+          </div>
+          <div class="ca-row">
+            <code id="project-ca"></code>
+            <button type="button" class="ghost" id="copy-ca">Copy</button>
+          </div>
+          <p id="project-note">The official CA is not set.</p>
+          <p class="links">
+            <a id="project-solscan" class="blank" href="#" target="_blank" rel="noreferrer">Solscan</a>
+            <a class="blank" href="#" data-need="Social profile">X</a>
+          </p>
+          <div class="supply-block">
+            <div class="supply-top">
+              <p class="kicker">Burned</p>
+              <span class="pill-tag">Snapshot</span>
+            </div>
+            <p class="burn-figure" id="project-burned">—</p>
+            <div class="burn-bar" aria-hidden="true"><span id="project-burn-bar"></span></div>
+            <p id="project-burn-meta"></p>
+            <details>
+              <summary>Exact supply figures</summary>
+              <dl class="supply-lines" id="project-supply"></dl>
+            </details>
+            <p class="fine" id="project-updated"></p>
+          </div>
+          <div class="copies-block">
+            <div class="supply-top">
+              <p class="kicker">Copies of this ticker</p>
+              <span class="pill-tag" id="project-copy-badge">—</span>
+            </div>
+            <p id="project-copies">No official CA yet.</p>
+            <p class="fine" id="project-copies-meta"></p>
+          </div>
+        </article>
+        <article class="card">
+          <p class="kicker">Repeated names</p>
+          <div id="repeated"></div>
+          <p class="fine">A match is the name or ticker, after ignoring case, spaces, and punctuation. Mayhem coins are left out.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="block" id="inspect">
+      <p class="index">01 · Inspector</p>
+      <article class="card">
+        <h2>Read the receipt.</h2>
+        <p>Paste a CA, a wallet, a transaction signature, or a pump.fun link. This reads what already happened. It does not simulate a trade.</p>
+        <form id="inspect-form" class="field">
+          <input id="value" name="value" placeholder="CA, wallet, or signature" autocomplete="off" required>
+          <button type="submit">Inspect</button>
+        </form>
+        <p id="inspect-error" class="error"></p>
+        <div id="inspect-out"></div>
+      </article>
+    </section>
+
+    <section class="block" id="watch">
+      <p class="index">02 · Watchlist</p>
+      <article class="card">
+        <h2>Keep a quiet eye.</h2>
+        <p>Saved only in this browser. A SOL balance is read when you ask. No prices.</p>
+        <form id="watch-form" class="field two">
+          <input id="watch-label" placeholder="Label" autocomplete="off" required>
+          <input id="watch-address" placeholder="Wallet address" autocomplete="off" required>
+          <button type="submit">Save address</button>
+        </form>
+        <ul id="watches" class="plain"></ul>
+      </article>
+
+      <article class="card" id="launches">
+        <h2>New launches, as they land.</h2>
+        <p>The newest pump.fun launches this reader has seen. A listing is not an endorsement. Names are not unique: check the CA.</p>
+        <div id="launch-list"></div>
+        <p class="fine" id="launch-meta"></p>
+      </article>
+
+      <article class="card" id="names">
+        <h2>Watch a name.</h2>
+        <p>Type a ticker or a name. Vellum  lists pump.fun launches it has seen, and older pump pairs whose name or ticker matches exactly. A coin is then saved. It does not stop a copy from launching.</p>
+        <form id="copies-form" class="field two">
+          <input id="terms" placeholder="Ticker or name, comma separated" autocomplete="off">
+          <input id="official" placeholder="Official CA to exclude, optional" autocomplete="off">
+          <button type="submit">Find copies</button>
+          <button type="button" id="save-guard">Save</button>
+        </form>
+        <p id="copies-error" class="error"></p>
+        <div id="copies-out"></div>
+        <div id="guards"></div>
+      </article>
+
+      <article class="card" id="deployers">
+        <h2>Same deployer.</h2>
+        <p>Scan the recent transactions of a wallet for a pump CA, or save the wallet and Vellum  will note the next deploy it sees from that address (since Vellum  was deployed).</p>
+        <form id="deployer-form" class="field">
+          <input id="deployer" placeholder="Deployer wallet" autocomplete="off">
+          <button type="submit">Scan recent transactions</button>
+          <button type="button" id="save-deployer">Save</button>
+        </form>
+        <p id="deployer-error" class="error"></p>
+        <div id="deployer-out"></div>
+        <div id="deployer-list"></div>
+        <h3>Busiest creators in this session</h3>
+        <div id="busiest"></div>
+      </article>
+    </section>
+
+    <section class="block" id="record">
+      <p class="index">03 · Record</p>
+      <article class="card" id="phases">
+        <h2>Where the coins sit.</h2>
+        <p>Pump.fun coins start on a bonding curve. Some move to a pool. Vellum  counts those two phases from what it has seen.</p>
+        <dl class="stats" id="phase-stats"></dl>
+        <div id="phase-list"></div>
+        <p class="fine" id="phase-meta"></p>
+      </article>
+
+      <article class="card">
+        <h2>What is in the record.</h2>
+        <p>These are the reads Vellum  already does.</p>
+        <ol class="shipped">
+          <li><b>Inspect</b> A CA, a wallet, or a signature, read from Solana.</li>
+          <li><b>Launches</b> pump.fun CAs, without mayhem coins.</li>
+          <li><b>Names</b> Exact ticker and name matches.</li>
+          <li><b>Deployers</b> The next CA from a wallet you save, plus a scan of its recent transactions.</li>
+          <li><b>Graduations</b> Curves that moved to a pool.</li>
+        </ol>
+      </article>
+      <article class="card">
+        <h2>Alerts for saved addresses</h2>
+        <div id="alerts"></div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <a class="brand" href="#top">
+      <svg class="mark" viewBox="0 0 40 40" aria-hidden="true">
+        <path fill="currentColor" fill-rule="evenodd" d="M20 2.2 37.4 14.6 31.6 37.4 8.4 37.4 2.6 14.6Z M26.2 11.4 35.6 19.2 31.6 33.2 18.4 33.2 15.2 19.2Z"></path>
+      </svg>
+      <span>Vellum </span>
+    </a>
+    <p>
+      <a class="blank" href="#" data-need="Social profile">X</a>
+      <a class="blank" href="#" data-need="Github">Github</a>
+    </p>
+  </footer>
+  <script src="/app.js"></script>
+</body>
+</html>
